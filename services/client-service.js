@@ -57,29 +57,15 @@ Update(actualizar) -> PUT/PATCH
 Delete(borrar) ->DELETE
 */
 
+//Fetch API -> funcion que viene por defecto
+
+
 const listaClientes = () =>{
-    const promise = new Promise((resolve, reject) => {
-        const http = new XMLHttpRequest();
-        http.open("GET", "http://localhost:3000/perfil");
-
-        //send -> se va a encargar de enviar la peticion, saldrá del servidor hasta la URL
-        http.send();
-
-        http.onload =() => {
-
-            //nueva constante llamada data 
-            const response =JSON.parse(http.response); //parse nos ayudará a transformarlo de texto normal a javascript        
-            if(http.status>= 400){
-                reject(response);
-            }else{
-                resolve(response);
-            }
-        };
-        });
-    return promise
-};
+   return fetch("http://localhost:3000/perfil").then( respuesta => respuesta.json());//A mi respuesta darle un formato json
+   };
 //then se ejecuta en caso tenga la informacion, en este caso la data
-listaClientes().then((data) =>{
+listaClientes()
+.then((data) =>{
     data.forEach(perfil => {
         const nuevaLinea = crearNuevaLinea(perfil.nombre, perfil.email);
          table.appendChild(nuevaLinea);
