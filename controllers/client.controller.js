@@ -1,6 +1,6 @@
 import {clientServices} from "../services/client-service.js";
 
-const crearNuevaLinea= (nombre, email)=>{
+const crearNuevaLinea= (nombre, email, id)=>{
 
     // comillas para poder usar html en js -> ``
 
@@ -21,8 +21,8 @@ const crearNuevaLinea= (nombre, email)=>{
        </li>
        <li>
          <button
-           class="simple-button simple-button--delete"
-           type="button"
+           class="simple-button simple-button--delete
+           type="button" id="${id}"
          >
            Eliminar
          </button>
@@ -32,6 +32,13 @@ const crearNuevaLinea= (nombre, email)=>{
 `;
 
     linea.innerHTML = contenido;
+    const btn = linea.querySelector("button");
+    console.log(btn);
+    btn.addEventListener('onclick', () => {
+       const id=btn.id;
+       clientServices.eliminarCliente(id).then( respuesta => {
+       }).catch(err => alert ("Ocurrió un error"));
+    });
     return linea; // ya deberia ser el codigo html rellenado con el const contenido
 };
 //nueva comunicacion entre en front end y backend
@@ -48,12 +55,10 @@ const table =document.querySelector('[data-table]');
 //then se ejecuta en caso tenga la informacion, en este caso la data
 clientServices.listaClientes()
 .then((data) =>{
-    data.forEach(perfil => {
-        const nuevaLinea = crearNuevaLinea(perfil.nombre, perfil.email);
+    data.forEach(({nombre,email,id}) => {
+        const nuevaLinea = crearNuevaLinea(nombre, email, id);
          table.appendChild(nuevaLinea);
      });
 }).catch((error) => alert("Ocurrió un error"));
-
 //una vez que cargues o termines de recibir esta respuesta va a ejecutarse esta consola
-
 
