@@ -1,4 +1,4 @@
-import {clientServies} from "../services/client-service.js";
+import {clientServices} from "../services/client-service.js";
 
 const crearNuevaLinea= (nombre, email)=>{
 
