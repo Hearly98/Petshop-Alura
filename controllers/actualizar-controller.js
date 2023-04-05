@@ -1,10 +1,10 @@
 import { clientServices } from "../services/client-service.js";
 
-
+const formulario = document.querySelector('[data-form]');
 
 //nueva function
 
-const obtenerInformacion = () =>{
+const obtenerInformacion =  () =>{
     const url = new URL(window.location);
     const id = url.searchParams.get("id");
 
@@ -15,7 +15,6 @@ if(id === null){
     const nombre= document.querySelector('[data-nombre]');
     const email= document.querySelector('[data-email]');
 
-    console.log(nombre,"---------", email);
 
     clientServices.detalleCliente(id).then((perfil) =>{
         nombre.value = perfil.nombre;
@@ -24,4 +23,20 @@ if(id === null){
 }
 
 obtenerInformacion();
-formulario.addEventListener();
+
+formulario.addEventListener("submit" , (evento)=>{
+    evento.preventDefault()
+    const url = new URL(window.location);
+    const id = url.searchParams.get("id");
+
+
+    const nombre = document.querySelector("[data-nombre]").value
+    const email = document.querySelector("[data-email]").value
+    console.log(nombre, " ",email);
+    //llamando funcion para actualizar
+    clientServices.actualizarCliente(nombre, email, id)
+    .then(()=>{
+        window.location.href ="/screens/edicion_concluida.html";
+    })
+
+});
