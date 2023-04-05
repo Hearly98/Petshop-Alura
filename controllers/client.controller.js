@@ -14,7 +14,7 @@ const crearNuevaLinea= (nombre, email, id)=>{
      <ul class="table__button-control">
        <li>
          <a
-           href="../screens/editar_cliente.html"
+           href="../screens/editar_cliente.html?id=${id}"
            class="simple-button simple-button--edit"
            >Editar</a
          >
@@ -34,9 +34,9 @@ const crearNuevaLinea= (nombre, email, id)=>{
     linea.innerHTML = contenido;
     const btn = linea.querySelector("button");
     console.log(btn);
-    btn.addEventListener('onclick', () => {
+    btn.addEventListener('click', () => {
        const id=btn.id;
-       clientServices.eliminarCliente(id).then( respuesta => {
+       clientServices.eliminarCliente(id).then( respuesta => { console.log(respuesta);
        }).catch(err => alert ("Ocurrió un error"));
     });
     return linea; // ya deberia ser el codigo html rellenado con el const contenido
