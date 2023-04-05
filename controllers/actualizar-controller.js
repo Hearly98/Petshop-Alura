@@ -4,7 +4,7 @@ const formulario = document.querySelector('[data-form]');
 
 //nueva function
 
-const obtenerInformacion =  () =>{
+const obtenerInformacion = async () =>{
     const url = new URL(window.location);
     const id = url.searchParams.get("id");
 
@@ -14,12 +14,9 @@ if(id === null){
 
     const nombre= document.querySelector('[data-nombre]');
     const email= document.querySelector('[data-email]');
-
-
-    clientServices.detalleCliente(id).then((perfil) =>{
+    const perfil = await clientServices.detalleCliente(id)
         nombre.value = perfil.nombre;
         email.value = perfil.email;
-    });
 }
 
 obtenerInformacion();
